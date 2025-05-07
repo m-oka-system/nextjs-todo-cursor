@@ -1,36 +1,82 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Todo アプリ
 
-## Getting Started
+Next.js, TypeScript, shadcn/ui, Supabase を使用して構築された Todo アプリケーションです。
 
-First, run the development server:
+## 主な機能
+
+- タスクの新規登録
+- タスクの一覧表示
+- タスクの編集
+- タスクの削除
+- タスクの完了/未完了の切り替え
+
+## 使用技術
+
+- **フレームワーク**: Next.js 14
+- **言語**: TypeScript
+- **UI コンポーネント**: shadcn/ui
+- **データベース**: Supabase (PostgreSQL)
+- **フォーム管理**: React Hook Form
+- **バリデーション**: Zod
+- **日付操作**: date-fns
+- **その他**: Lucide React (アイコン)
+
+## セットアップ手順
+
+1.  **リポジトリをクローンします:**
+
+    ```bash
+    git clone <リポジトリのURL>
+    cd <プロジェクトディレクトリ>
+    ```
+
+2.  **依存関係をインストールします:**
+
+    ```bash
+    npm install
+    # または
+    yarn install
+    ```
+
+3.  **Supabase プロジェクトのセットアップ:**
+
+    - Supabase で新しいプロジェクトを作成します。
+    - プロジェクトの SQL エディタで以下の SQL を実行し、`todos` テーブルを作成します:
+      ```sql
+      CREATE TABLE todos (
+        id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+        task TEXT NOT NULL,
+        is_completed BOOLEAN DEFAULT FALSE,
+        created_at TIMESTAMPTZ DEFAULT now(),
+        due_date DATE
+      );
+      ```
+
+4.  **環境変数を設定します:**
+    プロジェクトのルートに `.env.local` ファイルを作成し、以下の内容を記述します。
+    `YOUR_SUPABASE_URL` と `YOUR_SUPABASE_ANON_KEY` は、Supabase プロジェクトの設定ページで確認できる実際の値に置き換えてください。
+
+    ```env
+    NEXT_PUBLIC_SUPABASE_URL=YOUR_SUPABASE_URL
+    NEXT_PUBLIC_SUPABASE_ANON_KEY=YOUR_SUPABASE_ANON_KEY
+    ```
+
+## 開発サーバーの起動
+
+以下のコマンドで開発サーバーを起動します。
 
 ```bash
 npm run dev
-# or
+# または
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+その後、ブラウザで `http://localhost:3000` を開いてください。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## ディレクトリ構成の概要
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `src/app/`: Next.js のページとレイアウト (App Router)
+- `src/components/`: 再利用可能な React コンポーネント
+  - `ui/`: shadcn/ui によって生成・カスタマイズされたコンポーネント
+- `src/lib/`: ユーティリティ関数や Supabase クライアントの初期化など
+- `src/hooks/`: カスタム React フック (例: `use-toast.ts`)
