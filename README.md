@@ -80,3 +80,37 @@ yarn dev
   - `ui/`: shadcn/ui によって生成・カスタマイズされたコンポーネント
 - `src/lib/`: ユーティリティ関数や Supabase クライアントの初期化など
 - `src/hooks/`: カスタム React フック (例: `use-toast.ts`)
+
+## Vercel へのデプロイ
+
+この Next.js アプリケーションは Vercel に簡単にデプロイできます。
+
+1.  **Vercel アカウントの準備:**
+
+    - Vercel のアカウントを持っていない場合は、[Vercel 公式サイト](https://vercel.com/)でサインアップしてください。
+    - GitHub, GitLab, Bitbucket いずれかのアカウントで簡単に連携できます。
+
+2.  **プロジェクトのインポート:**
+
+    - Vercel にログインし、「New Project」ボタンをクリックします。
+    - この Todo アプリのリポジトリを GitHub などからインポートします。（事前にリポジトリを GitHub などにプッシュしておく必要があります。）
+    - Vercel がリポジトリを分析し、自動的にフレームワークプリセットとして「Next.js」を検出するはずです。
+
+3.  **プロジェクトの設定:**
+
+    - **Project Name**: Vercel 上でのプロジェクト名を設定します。例: `nextjs-todo-cursor`
+    - **Framework Preset**: 「Next.js」が選択されていることを確認します。
+    - **Root Directory**: 通常はリポジトリのルート (`./`) のままで問題ありません。
+    - **Build and Output Settings**:
+      - **Build Command**: `npm run build` または `next build` が自動で設定されることが多いです。もしカスタマイズが必要な場合は上書きできます。
+      - **Output Directory**: Next.js のデフォルト（`.next`）が自動で設定されます。
+      - **Install Command**: `yarn install`, `pnpm install`, `npm install`, `bun install` のいずれかが、リポジトリ内のロックファイルに基づいて自動選択されるか、手動で設定できます。
+    - **Environment Variables（環境変数）:**
+      これが最も重要な設定の一つです。Supabase に接続するために、以下の環境変数を Vercel のプロジェクト設定に追加します。
+      - `NEXT_PUBLIC_SUPABASE_URL`: あなたの Supabase プロジェクトの URL（`.env.local` に設定したものと同じ）
+      - `NEXT_PUBLIC_SUPABASE_ANON_KEY`: あなたの Supabase プロジェクトの Anon Key（`.env.local` に設定したものと同じ）
+        Vercel のプロジェクト設定画面の「Environment Variables」セクションで、Key と Value をそれぞれ入力して追加してください。
+
+4.  **デプロイ:**
+    - 上記の設定が完了したら、「Deploy」ボタンをクリックします。
+    - Vercel がビルドプロセスを開始し、完了するとデプロイされた URL が提供されます。
